@@ -1,6 +1,7 @@
 import RichTextInput from 'ra-input-rich-text';
 import React from 'react';
 import {
+    ArrayInput,
     BooleanInput,
     Create,
     DateInput,
@@ -11,6 +12,7 @@ import {
     SimpleForm,
     TextInput,
     Toolbar,
+    SimpleFormIterator,
 } from 'react-admin'; // eslint-disable-line import/no-unresolved
 
 const PostCreateToolbar = props => (
@@ -67,6 +69,20 @@ const PostCreate = props => (
             </FormDataConsumer>
             <DateInput source="published_at" defaultValue={getDefaultDate} />
             <BooleanInput source="commentable" defaultValue />
+            <ArrayInput
+                source="backlinks"
+                defaultValue={[
+                    {
+                        date: new Date().toISOString(),
+                        url: 'http://google.com',
+                    },
+                ]}
+            >
+                <SimpleFormIterator>
+                    <DateInput source="date" />
+                    <TextInput source="url" />
+                </SimpleFormIterator>
+            </ArrayInput>
         </SimpleForm>
     </Create>
 );

@@ -65,7 +65,11 @@ export class SimpleFormIterator extends Component {
         // but redux-form doesn't provide one (cf https://github.com/erikras/redux-form/issues/2735)
         // so we keep an internal map between the field position and an autoincrement id
         this.nextId = 0;
-        this.ids = props.fields ? props.fields.map(() => this.nextId++) : [];
+        this.ids = props.defaultValue
+            ? props.defaultValue.map(() => this.nextId++)
+            : props.fields
+                ? props.fields.map(() => this.nextId++)
+                : [];
     }
 
     removeField = index => () => {
@@ -169,6 +173,7 @@ SimpleFormIterator.defaultProps = {
 };
 
 SimpleFormIterator.propTypes = {
+    defaultValue: PropTypes.any,
     basePath: PropTypes.string,
     children: PropTypes.node,
     classes: PropTypes.object,
